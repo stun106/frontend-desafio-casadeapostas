@@ -3,7 +3,7 @@ import type { Usuario } from "../@types/UsuarioType";
 import { useUsuarioService } from "../service/usuarioService";
 import { toast } from "react-toastify";
 
-export const useCriarUsuario = () => {
+export const useSalvarUsuario = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -19,7 +19,7 @@ export const useCriarUsuario = () => {
 
         onError: (error: unknown) => {
             if (error instanceof Error) {
-                toast.error(error.message || "Erro ao realizar criar usuario, verifiue seus dados.");
+                toast.error(error.message || "Erro ao salvar usuario, verifiue seus dados.");
             } else {
                 toast.error("Erro ao se comunicar com a api.");
             }
@@ -34,5 +34,5 @@ export const useUsuarioLogado = () => {
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
     });
-    return { usuarios: data, isLoading, error, refetch };
+    return { usuario: data, isLoading, error, refetch };
 };
