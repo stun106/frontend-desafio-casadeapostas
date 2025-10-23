@@ -1,4 +1,4 @@
-import TabelaCliente from "../../components/cliente/TabelaCliente";
+import TabelaCliente from "../../components/cliente/listarClientes/TabelaCliente";
 
 const Cliente: React.FC = () => {
     return (

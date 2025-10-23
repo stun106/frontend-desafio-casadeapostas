@@ -6,7 +6,8 @@ import App from "./App.tsx";
 import "./index.css";
 import CadastroUsuario from "./pages/usuario/CadastroUsuario.tsx";
 import Login from "./pages/Login.tsx";
-import Cliente from "./pages/cliente/Cliente.tsx";
+import Clientes from "./pages/cliente/Clientes.tsx";
+import CadastroCliente from "./pages/cliente/cadastro/CadastroCliente.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Login /> },
       {path: "/usuario", element: <CadastroUsuario />},
-      { path: "/clientes", element: <Cliente /> },
+      { path: "/clientes", element: <Clientes /> },
+      { path: "/cliente/cadastro", element: <CadastroCliente />}
     ],
   }
 ]);

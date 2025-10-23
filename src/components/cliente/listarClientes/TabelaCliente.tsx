@@ -1,11 +1,21 @@
-import Header from "../Header";
+import Header from "../../Header";
 import React from "react";
 import { useTabelaClienteFunctions } from "./functions/indext";
-import Loading from "../Loading";
-import { ConfirmaAcao } from "../ConfirmaAcao";
+import Loading from "../../Loading";
+import { ConfirmaAcao } from "../../ConfirmaAcao";
 
 const TabelaCliente: React.FC = () => {
-    const { isDelete, clienteSelecionado, qtdItems, isLoading, resultados, handleChange, abrirModalDeletar, setDelete } = useTabelaClienteFunctions();
+    const {
+        qtdItems,
+        isDelete,
+        isLoading,
+        resultados,
+        clienteSelecionado,
+        abrirModalDeletar,
+        handleChange,
+        setDelete,
+    } = useTabelaClienteFunctions();
+    
     return (
         <>
             <Header>
@@ -16,7 +26,9 @@ const TabelaCliente: React.FC = () => {
                     </h1>
 
                     <div className="flex gap-2">
-                        <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg transition-colors">
+                        <button
+                            onClick={() => window.location.replace("/cliente/cadastro")}
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg transition-colors">
                             + Adicionar
                         </button>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition-colors">
@@ -101,7 +113,7 @@ const TabelaCliente: React.FC = () => {
                                         titulo={"Confirmar Deletar"}
                                         descricao={`Tem certeza que deseja deletar o cliente`}
                                         predicado={clienteSelecionado?.nomeCompleto.toUpperCase()}
-                                        acao={() => handleDeletateUsuario(Number(clienteSelecionado?.idUsuario))}
+                                        acao={() => handleDeletateCliente(Number(clienteSelecionado?.idUsuario))}
                                         onClose={() => setDelete(false)} />
                                 )
                             }

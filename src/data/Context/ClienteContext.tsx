@@ -6,6 +6,10 @@ type ClienteContextType = {
   clienteContext: Cliente;
   setClienteContext: React.Dispatch<React.SetStateAction<Cliente>>;
   handleOnChangeCliente: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  addTelefone: () => void;
+  removeTelefone: (index: number) => void;
+  addEmail: () => void;
+  removeEmail: (index: number) => void;
 };
 
 const clienteInitial: Cliente = {
@@ -25,35 +29,74 @@ export const ClienteProvider: React.FC<{ children: ReactNode }> = ({ children })
     const { name, value } = e.target;
 
     if (name === "nomeCompleto") {
-      setClienteContext(prev => ({
-        ...prev,
-        nomeCompleto: value,
-      }));
+      setClienteContext(prev => ({ ...prev, nomeCompleto: value }));
       return;
     }
 
     if (name.startsWith("telefone")) {
-      setClienteContext(prev => ({
-        ...prev,
-        contato: {
-          ...prev.contato,
-          telefones: [{ numero: value }],
-          emails: [...prev.contato.emails],
-        },
-      }));
+      const index = parseInt(name.replace("telefone", "")) - 1;
+      setClienteContext(prev => {
+        const novosTelefones = [...prev.contato.telefones];
+        novosTelefones[index].numero = value;
+        return {
+          ...prev,
+          contato: { ...prev.contato, telefones: novosTelefones },
+        };
+      });
       return;
     }
 
     if (name.startsWith("email")) {
-      setClienteContext(prev => ({
-        ...prev,
-        contato: {
-          ...prev.contato,
-          emails: [{ email: value }],
-          telefones: [...prev.contato.telefones],
-        },
-      }));
+      const index = parseInt(name.replace("email", "")) - 1;
+      setClienteContext(prev => {
+        const novosEmails = [...prev.contato.emails];
+        novosEmails[index].email = value;
+        return {
+          ...prev,
+          contato: { ...prev.contato, emails: novosEmails },
+        };
+      });
     }
+  };
+
+  const addTelefone = () => {
+    setClienteContext(prev => ({
+      ...prev,
+      contato: {
+        ...prev.contato,
+        telefones: [...prev.contato.telefones, { numero: "" }],
+      },
+    }));
+  };
+
+  const removeTelefone = (index: number) => {
+    setClienteContext(prev => ({
+      ...prev,
+      contato: {
+        ...prev.contato,
+        telefones: prev.contato.telefones.filter((_, i) => i !== index),
+      },
+    }));
+  };
+
+  const addEmail = () => {
+    setClienteContext(prev => ({
+      ...prev,
+      contato: {
+        ...prev.contato,
+        emails: [...prev.contato.emails, { email: "" }],
+      },
+    }));
+  };
+
+  const removeEmail = (index: number) => {
+    setClienteContext(prev => ({
+      ...prev,
+      contato: {
+        ...prev.contato,
+        emails: prev.contato.emails.filter((_, i) => i !== index),
+      },
+    }));
   };
 
   return (
@@ -62,6 +105,10 @@ export const ClienteProvider: React.FC<{ children: ReactNode }> = ({ children })
         clienteContext,
         setClienteContext,
         handleOnChangeCliente,
+        addTelefone,
+        removeTelefone,
+        addEmail,
+        removeEmail,
       }}
     >
       {children}

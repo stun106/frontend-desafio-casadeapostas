@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Cliente } from "../../../data/@types/ClienteType";
-import { useListarCliente } from "../../../data/hook/ClienteHook";
+import type { Cliente } from "../../../../data/@types/ClienteType";
+import { useListarCliente } from "../../../../data/hook/ClienteHook";
 
 export function useTabelaClienteFunctions() {
     const { clientes, isLoading } = useListarCliente();
