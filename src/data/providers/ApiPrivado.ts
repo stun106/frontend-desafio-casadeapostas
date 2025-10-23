@@ -29,7 +29,7 @@ ApiPrivado.interceptors.response.use(
         isRedirecting = true;
         localStorage.removeItem("token");
         localStorage.removeItem("usuarioLogado");
-        window.location.href = "/login";
+        window.location.href = "/";
       }
     }
     return Promise.reject(error);

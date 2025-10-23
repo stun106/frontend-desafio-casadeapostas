@@ -19,9 +19,6 @@ export default function App() {
         theme="colored"
       />
       <div className="flex flex-col min-h-screen">
-        {
-          mostrarHeader &&  <Header />
-        }
         <main>
           <Outlet />
         </main>
