@@ -15,7 +15,7 @@ const TabelaCliente: React.FC = () => {
         handleChange,
         setDelete,
     } = useTabelaClienteFunctions();
-    
+
     return (
         <>
             <Header>
@@ -56,7 +56,7 @@ const TabelaCliente: React.FC = () => {
                 isLoading ? (
                     <Loading />
                 ) : (
-                    <main className="flex justify-center items-start py-10 px-4 bg-[#0b1120] min-h-[calc(100vh-120px)]">
+                    <main className="flex justify-center items-start py-10 px-4 bg-[#0b1120] min-h-[calc(90vh-100px)]">
                         <div className="w-full max-w-6xl bg-[#111827] shadow-xl rounded-2xl overflow-hidden border border-emerald-700">
                             <table className="w-full text-left text-gray-200 border-collapse">
                                 <thead className="bg-emerald-700 text-gray-100 uppercase text-sm">
@@ -72,7 +72,11 @@ const TabelaCliente: React.FC = () => {
                                         resultados && resultados.length > 0 ? (
                                             resultados.map((item, index) => (
                                                 <>
-                                                    <tr className="hover:bg-gray-800/60 transition-colors" key={index} >
+                                                    <tr
+                                                        className="hover:bg-gray-800/60 transition-colors cursor-pointer"
+                                                        onClick={() => window.location.replace(`/cliente/exibirCliente/${item.idCliente}`)}
+                                                        key={index}
+                                                         >
                                                         <td className="px-6 py-4">
                                                             {item.nomeCompleto}
                                                         </td>
