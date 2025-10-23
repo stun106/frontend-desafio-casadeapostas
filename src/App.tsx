@@ -1,21 +1,27 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
+  const location = useLocation();
+
+  // define quais rotas devem exibir o header
+  const mostrarHeader = location.pathname.startsWith("/clientes");
   return (
     <>
       <ToastContainer
-        position="top-right"
-        autoClose={3000}
+        position="bottom-right"
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop
         closeOnClick
         theme="colored"
       />
       <div className="flex flex-col min-h-screen">
-        {/* <Header /> */}
-        <main className="flex-1 bg-slate-900 text-slate-100 p-6">
+        {/* {
+          mostrarHeader &&  <Header />
+        } */}
+        <main>
           <Outlet />
         </main>
         {/* <Footer /> */}
