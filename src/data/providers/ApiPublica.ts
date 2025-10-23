@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const HOST = 'http://localhost:8080';
+const HOST = 'http://localhost:8080/api/v1';
 
 export const ApiPublica = axios.create({
-    baseURL: `${HOST}/api/v1/`,
+    baseURL: HOST,
     headers: {
         'Content-Type': 'application/json'
     }

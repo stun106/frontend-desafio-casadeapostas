@@ -1,15 +1,26 @@
 import { useState } from "react";
 import { useUsuarioContext } from "../../../data/Context/UsuarioContext";
 import { useUsuarioFunctions } from "./functions";
+import { toast } from "react-toastify";
 
 const CadastroUsuarioForm: React.FC = () => {
     const { usuarioContext, handleOnChangeUsuario } = useUsuarioContext();
-    const [ confirmaSenha, setConfirmaSenha] = useState("");
-    const { isValidSenha } = useUsuarioFunctions({senha: usuarioContext.senha, confirmarSenha: confirmaSenha});
+    const [confirmaSenha, setConfirmaSenha] = useState("");
+    const { isValidSenha, handleSalvarUsuario } = useUsuarioFunctions({ confirmarSenha: confirmaSenha });
 
-    console.log(`Validação de senha:\n${isValidSenha === null ? 'Estado default' : isValidSenha ? 'Senha válida': 'Senhas não coicidem'}`)
+    console.log(`Validação de senha:\n${isValidSenha === null ? 'Estado default' : isValidSenha ? 'Senha válida' : 'Senhas não coicidem'}`);
 
     console.log(usuarioContext);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            await handleSalvarUsuario();
+            toast.success("Cadastro realizado com sucesso!");
+        }catch(error) {
+            toast.error((error as Error)?.message || "Erro ao salvar usuário.");
+        }
+    };
 
     return (
         <>
@@ -28,7 +39,7 @@ const CadastroUsuarioForm: React.FC = () => {
                     </div>
 
                     <form
-                        // onSubmit={handleSubmit} 
+                        onSubmit={handleSubmit}
                         className="space-y-5">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -99,7 +110,7 @@ const CadastroUsuarioForm: React.FC = () => {
                                 name="senha"
                                 onChange={(e) => setConfirmaSenha(e.target.value)}
                                 required
-                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                                className={`w-full border border-gray-300 rounded-lg px-3 py-2   focus:outline-none ${!isValidSenha ? 'border-red-500' : 'focus:ring-2 focus:ring-emerald-500'}`}
                                 placeholder="Crie uma senha segura"
                             />
                         </div>
