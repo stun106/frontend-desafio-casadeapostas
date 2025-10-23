@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Cliente } from "../../../../data/@types/ClienteType";
-import { useListarCliente } from "../../../../data/hook/ClienteHook";
+import { useDeletarCliente, useListarCliente } from "../../../../data/hook/ClienteHook";
+import { toast } from "react-toastify";
 
 export function useTabelaClienteFunctions() {
     const { clientes, isLoading } = useListarCliente();
@@ -8,6 +9,7 @@ export function useTabelaClienteFunctions() {
     const [param, setParam] = useState("");
     const [isDelete, setDelete] = useState(false);
     const [clienteSelecionado, setClienteSelecionado] = useState<Cliente | null>(null);
+    const { mutateAsync: deletarCliente } = useDeletarCliente();
 
     const removerAcentos = (texto: string) =>
         texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -28,9 +30,20 @@ export function useTabelaClienteFunctions() {
     };
 
     const abrirModalDeletar = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, cliente: Cliente) => {
-        e.stopPropagation(); // Evita que o clique no botão propague para o <tr>
+        e.stopPropagation();
         setClienteSelecionado(cliente);
         setDelete(true);
+    };
+
+    const handleDeletarCliente = async (idCliente: string) => {
+        try {
+            const response = await deletarCliente({ idCliente: idCliente });
+            setDelete(false);
+            console.log(response)
+            toast.success("cliente removido com sucesso!")
+        } catch (error) {
+            toast.error((error as Error)?.message || "Erro ao realizar a exclusão, verifique seus dados.");
+        }
     };
 
     useEffect(() => {
@@ -40,20 +53,6 @@ export function useTabelaClienteFunctions() {
         return () => clearTimeout(timeout);
     }, [param, clientes]);
 
-    // const handleDeletateUsuario = (idUsuario: number) => {
-    //     try {
-    //         if (idUsuario) {
-    //             mutateDelete({ idUsuario: idUsuario });
-    //             toast.success(`Usuário Deletado com sucesso!`);
-
-    //             //reset de states
-    //             setUsuarioSelecionado(null);
-    //             setDelete(false);
-    //         }
-    //     } catch (error) {
-    //         toast.error("Erro ao processar os dados, verifique seus dados ou entre em contato com o administrador.");
-    //     }
-    // }
 
     const qtdItems = clientes?.length;
 
@@ -64,6 +63,7 @@ export function useTabelaClienteFunctions() {
         isLoading,
         resultados,
         clienteSelecionado,
+        handleDeletarCliente,
         abrirModalDeletar,
         handleChange,
         setDelete,

@@ -6,7 +6,11 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
-
+    const logout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('usuarioLogado')
+        window.location.replace("/")
+    }
     return (
         <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex flex-col gap-4">
             {/* Barra superior fixa */}
@@ -18,6 +22,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
 
                     <button
                         className="flex items-center gap-2 text-white bg-red-500 hover:bg-red-600 px-2 py-1 text-xs rounded-lg transition-colors"
+                        onClick={logout}
                     >
                         Logout
                     </button>

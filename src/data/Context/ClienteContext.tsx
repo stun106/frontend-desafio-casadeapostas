@@ -66,7 +66,7 @@ const addTelefone = () => {
       ...prev.contato,
       telefones: [
         ...prev.contato.telefones,
-        { idTelefone: undefined, numero: "" }, // adiciona sem sobrescrever os existentes
+        { idTelefone: undefined, numero: "" },
       ],
     },
   }));

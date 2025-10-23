@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useClienteContext } from "../../../../data/Context/ClienteContext"
-import { useBuscarCliPorId, useDeletarCliente, useDeletarEmail, useDeletarTelefone, useEditarCliente  } from "../../../../data/hook/ClienteHook";
+import { useDeletarCliente, useDeletarEmail, useDeletarTelefone, useEditarCliente  } from "../../../../data/hook/ClienteHook";
 import { useEffect } from "react";
 
 
@@ -9,7 +9,6 @@ export function useEdicaoClienteFunction () {
     const { mutateAsync: atualizarCliente, isPending: isLoading} = useEditarCliente();
     const { mutateAsync: deletatarTelefone } = useDeletarTelefone();
     const { mutateAsync: deletarEmail} = useDeletarEmail();
-    const { mutateAsync: deletarCliente } = useDeletarCliente();
 
         const handleEditarCliente = async (e:React.FormEvent) => {
             e.preventDefault();
@@ -26,17 +25,6 @@ export function useEdicaoClienteFunction () {
             }
         };
 
-        const handleDeletarCliente = async () => {
-            try {
-                const response = await deletarCliente({idCliente: String(clienteContext.idCliente)});
-                console.log(response)
-                toast.success("cliente removido com sucesso!", {
-                    onClose: () => { window.location.replace("/clientes")}
-                })
-            } catch (error) {
-                 toast.error((error as Error)?.message || "Erro ao realizar a exclusão, verifique seus dados.");
-            }
-        };
 
         const handleDeletarTelefone = async (idTelefone:string) => {
             try {
@@ -68,7 +56,6 @@ export function useEdicaoClienteFunction () {
     return {
         isLoading,
         handleEditarCliente,
-        handleDeletarCliente,
         handleDeletarTelefone,
         handleDeletarEmail
     }
