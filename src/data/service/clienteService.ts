@@ -79,7 +79,7 @@ const ExibirCliente = async (idCliente: string) => {
     }
 }
 
-const EditarCliente = async (idCliente: string, payload: Usuario) => {
+const EditarCliente = async (idCliente: string, payload: Cliente) => {
     try {
         const response = await ApiPrivado.put<Cliente>(`/cliente/${idCliente}`, payload);
         return response.data;
@@ -104,9 +104,33 @@ const EditarCliente = async (idCliente: string, payload: Usuario) => {
     }
 }
 
+const deleteCliente = async (idCliente: string) => {
+    try {
+        const response = await ApiPrivado.delete<Cliente>(`/cliente/${idCliente}`);
+        return response.data;
+    } catch (error: unknown) {
+        let mensagem = "Erro ao deletar o cliente";
+
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+
+            if (status === 404) {
+                mensagem = "cliente nao encontrado";
+            } else if (status === 500) {
+                mensagem = "Erro interno do servidor. Tente novamente mais tarde.";
+            } else {
+                mensagem = error.response?.data?.message || mensagem;
+            }
+        } else if (error instanceof Error) {
+            mensagem = error.message;
+        }
+        throw new Error(mensagem);
+    }
+
+}
 const deleteTelefone = async (idTelefone: string) => {
     try {
-        const response = await ApiPrivado.delete<Cliente>(`/excluirTelefone/${idTelefone}`);
+        const response = await ApiPrivado.delete<Cliente>(`/cliente/excluirTelefone/${idTelefone}`);
         return response.data;
     } catch (error: unknown) {
         let mensagem = "Erro ao deletar o telefone, verifique seus dados.";
@@ -132,7 +156,7 @@ const deleteTelefone = async (idTelefone: string) => {
 }
 const deleteEmail = async (idEmail: string) => {
     try {
-        const response = await ApiPrivado.delete<Cliente>(`/excluirTelefone/${idEmail}`);
+        const response = await ApiPrivado.delete<Cliente>(`/cliente/excluirEmail/${idEmail}`);
         return response.data;
     } catch (error: unknown) {
         let mensagem = "Erro ao deletar o email, verifique seus dados.";
@@ -161,6 +185,7 @@ export const useClienteService = {
     deleteEmail,
     criarCliente,
     EditarCliente,
+    deleteCliente,
     ExibirCliente,
     listarClientes,
     deleteTelefone,

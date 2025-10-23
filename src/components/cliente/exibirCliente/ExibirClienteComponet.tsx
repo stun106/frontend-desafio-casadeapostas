@@ -6,10 +6,11 @@ import Loading from "../../Loading"
 const ExibirClienteComponent: React.FC = () => {
   const { idCliente } = useParams<{ idCliente: string }>();
   const { cliente, isLoading } = useBuscarCliPorId(idCliente as string); 
+  
     return (
         <>
             <Header>
-                <h1 className="text-xl font-semibold text-gray-800">Cadastro de Cliente</h1>
+                <h1 className="text-xl font-semibold text-gray-800">Visualizar Cliente</h1>
             </Header>
             {isLoading ? (
                 <Loading />

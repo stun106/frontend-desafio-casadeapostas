@@ -15,8 +15,8 @@ type ClienteContextType = {
 const clienteInitial: Cliente = {
   nomeCompleto: "",
   contato: {
-    telefones: [{ numero: "" }],
-    emails: [{ email: "" }],
+    telefones: [],
+    emails: [],
   },
 };
 
@@ -59,15 +59,19 @@ export const ClienteProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   };
 
-  const addTelefone = () => {
-    setClienteContext(prev => ({
-      ...prev,
-      contato: {
-        ...prev.contato,
-        telefones: [...prev.contato.telefones, { numero: "" }],
-      },
-    }));
-  };
+const addTelefone = () => {
+  setClienteContext(prev => ({
+    ...prev,
+    contato: {
+      ...prev.contato,
+      telefones: [
+        ...prev.contato.telefones,
+        { idTelefone: undefined, numero: "" }, // adiciona sem sobrescrever os existentes
+      ],
+    },
+  }));
+};
+
 
   const removeTelefone = (index: number) => {
     setClienteContext(prev => ({

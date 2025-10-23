@@ -17,6 +17,18 @@ export const useSalvarCliente = () => {
     });
 };
 
+export const useEditarCliente = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({ idCliente, cliente }: { idCliente: string, cliente: Cliente }) => {
+            return await useClienteService.EditarCliente(idCliente, cliente)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["clientes"] })
+        },
+    })
+}
+
 export const useListarCliente = () => {
     const { data, isLoading, error, refetch } = useQuery({
         queryKey: ["clientes"],
@@ -36,25 +48,44 @@ export const useBuscarCliPorId = (idCliente: string) => {
     return { cliente: data, isLoading, error, refetch }
 }
 
-export const useDeletarTelefone = () => {
+export const useDeletarCliente = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ idTelefone }: { idTelefone: string }) => {
-            return await useClienteService.deleteTelefone(idTelefone)
+        mutationFn: async ({ idCliente }: { idCliente: string }) => {
+            return await useClienteService.deleteCliente(idCliente)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["clientes", "clientesPorId"] });
+            queryClient.invalidateQueries({ queryKey: ["clientes"] });
         }
     })
 }
+export const useDeletarTelefone = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async ({ idTelefone }: { idTelefone: string }) => {
+            return await useClienteService.deleteTelefone(idTelefone);
+        },
+        onSuccess: (_data, _variables, _context) => {
+            queryClient.invalidateQueries({
+                queryKey: ["clientesPorId"],
+                exact: false,
+            });
+        },
+    });
+};
+
 export const useDeletarEmail = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async ({ idEmail }: { idEmail: string }) => {
             return await useClienteService.deleteEmail(idEmail)
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["clientes", "clientesPorId"] });
-        }
+         onSuccess: (_data, _variables, _context) => {
+            queryClient.invalidateQueries({
+                queryKey: ["clientesPorId"],
+                exact: false,
+            });
+        },
     })
 }

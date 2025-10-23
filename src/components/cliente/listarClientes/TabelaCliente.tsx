@@ -96,7 +96,9 @@ const TabelaCliente: React.FC = () => {
                                                                     className="px-3 py-1 bg-red-500 hover:bg-red-700 rounded-lg text-sm font-medium transition">
                                                                     excluir
                                                                 </button>
-                                                                <button className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-medium transition">
+                                                                <button 
+                                                                onClick={() => window.location.replace(`/cliente/exibirCliente/editar/${item.idCliente}`)}
+                                                                className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-medium transition">
                                                                     Editar
                                                                 </button>
 
