@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "./components/Header";
 
 export default function App() {
   const location = useLocation();
@@ -18,9 +19,9 @@ export default function App() {
         theme="colored"
       />
       <div className="flex flex-col min-h-screen">
-        {/* {
+        {
           mostrarHeader &&  <Header />
-        } */}
+        }
         <main>
           <Outlet />
         </main>

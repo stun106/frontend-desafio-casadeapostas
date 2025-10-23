@@ -27,13 +27,6 @@ export const login = async (payload: Credencial) => {
   }
 };
 
-export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("usuarioLogado")
-  window.location.href = "/login";
-}
-
 export const useAuthService = {
-  login,
-  logout,
+  login
 }
