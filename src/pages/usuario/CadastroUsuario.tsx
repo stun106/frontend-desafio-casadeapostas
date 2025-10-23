@@ -1,9 +1,9 @@
-import CadastroUsuarioForm from "../../components/forms/usuario/CadastroUsuarioForm";
+import CadastroUsuarioComponent from "../../components/usuario/CadastroUsuarioComponent";
 import { UsuarioProvider } from "../../data/Context/UsuarioContext";
 
 const CadastroUsuario: React.FC = () => (
   <UsuarioProvider>
-    <CadastroUsuarioForm />
+    <CadastroUsuarioComponent />
   </UsuarioProvider>
 );
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useUsuarioContext } from "../../../data/Context/UsuarioContext";
+import { useUsuarioContext } from "../../data/Context/UsuarioContext";
 import { useUsuarioFunctions } from "./functions";
 import { toast } from "react-toastify";
 
-const CadastroUsuarioForm: React.FC = () => {
+const CadastroUsuarioComponent: React.FC = () => {
     const { usuarioContext, handleOnChangeUsuario } = useUsuarioContext();
     const [confirmaSenha, setConfirmaSenha] = useState("");
     const { isValidSenha, handleSalvarUsuario } = useUsuarioFunctions({ confirmarSenha: confirmaSenha });
@@ -16,8 +16,12 @@ const CadastroUsuarioForm: React.FC = () => {
         e.preventDefault();
         try {
             await handleSalvarUsuario();
-            toast.success("Cadastro realizado com sucesso!");
-        }catch(error) {
+            toast.success("Usuario Cadastrado com sucesso!", {
+                onClose: () => {
+                    window.location.replace('/')
+                }
+            })
+        } catch (error) {
             toast.error((error as Error)?.message || "Erro ao salvar usuário.");
         }
     };
@@ -96,6 +100,8 @@ const CadastroUsuarioForm: React.FC = () => {
                                 value={usuarioContext.senha}
                                 onChange={handleOnChangeUsuario}
                                 required
+                                maxLength={6}
+                                minLength={6}
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                                 placeholder="Crie uma senha segura"
                             />
@@ -110,7 +116,11 @@ const CadastroUsuarioForm: React.FC = () => {
                                 name="senha"
                                 onChange={(e) => setConfirmaSenha(e.target.value)}
                                 required
-                                className={`w-full border border-gray-300 rounded-lg px-3 py-2   focus:outline-none ${!isValidSenha ? 'border-red-500' : 'focus:ring-2 focus:ring-emerald-500'}`}
+                                maxLength={6}
+                                minLength={6}
+                                className={`w-full border border-gray-300 rounded-lg px-3 py-2   focus:outline-none ${isValidSenha === null ? ''
+                                    : isValidSenha === false ? 'border-red-500'
+                                        : 'focus:ring-2 focus:ring-emerald-500'}`}
                                 placeholder="Crie uma senha segura"
                             />
                         </div>
@@ -137,4 +147,4 @@ const CadastroUsuarioForm: React.FC = () => {
     )
 }
 
-export default CadastroUsuarioForm;
+export default CadastroUsuarioComponent;

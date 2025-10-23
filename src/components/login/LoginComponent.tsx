@@ -1,30 +1,32 @@
-const Home: React.FC = () => {
+import { useAuthHomePage } from "./functions";
+
+const LoginComponent: React.FC = () => {
+    const { handleOnChangeCredencial, handleAutentificacao } = useAuthHomePage();
     return (
         <>
             <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-gray-800">
                 <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8">
                     <div className="flex flex-col items-center mb-6">
-                        {/* <img
-                            src="/logo.svg" 
-                            alt="Casa de Apostas"
-                            className="h-12 mb-4"
-                        /> */}
+                        {/* logo */}
                         <h1 className="text-2xl font-bold">Acessar conta</h1>
                     </div>
 
                     <p className="text-center text-gray-600 text-sm mb-6">
-                        Por favor, utilize suas informações de login e senha da Casa de Apostas para se conectar.
+                        Desafio Full Stack Casa de Apostas.
                     </p>
 
-                    <form className="space-y-5">
+                    <form onSubmit={handleAutentificacao} className="space-y-5">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                E-mail / Nome de usuário / CPF
+                                E-mail
                             </label>
                             <input
-                                type="text"
+                                type="email"
+                                name="email"
+                                required
+                                onChange={handleOnChangeCredencial}
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                                placeholder="Digite seu e-mail, usuário ou CPF"
+                                placeholder="Digite seu e-mail"
                             />
                         </div>
 
@@ -35,12 +37,14 @@ const Home: React.FC = () => {
                             <div className="relative">
                                 <input
                                     type="password"
+                                    name="senha"
+                                    required
+                                    onChange={handleOnChangeCredencial}
+                                    minLength={6}
+                                    maxLength={6}
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                                    placeholder="Digite sua senha"
+                                    placeholder="Digite sua senha de 6 digitos"
                                 />
-                                <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600">
-                                    👁️
-                                </span>
                             </div>
                         </div>
 
@@ -87,4 +91,4 @@ const Home: React.FC = () => {
     )
 }
 
-export default Home;
+export default LoginComponent;

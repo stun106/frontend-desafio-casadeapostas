@@ -8,7 +8,7 @@ export const useSalvarUsuario = () => {
     return useMutation({
         mutationFn: async (usuario: Usuario) => {
             const response = useUsuarioService.criarUsuario(usuario);
-            return response;
+            return response
         },
 
         onSuccess: () => {
