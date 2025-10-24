@@ -112,7 +112,9 @@ const TabelaCliente: React.FC = () => {
                                                 </>
                                             ))
                                         ) : (
-                                            null
+                                            <tr>
+                                                <td className="text-center p-2" colSpan={4}>Não existe usuários cadastrados.</td>
+                                            </tr>
                                         )
                                     }
                                 </tbody>
