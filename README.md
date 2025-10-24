@@ -20,7 +20,7 @@ O projeto **Frontend Casa de Apostas** é uma interface web desenvolvida em **Re
 git clone https://github.com/stun106/frontend-desafio-casadeapostas.git
 
 # Acessar o diretório
-cd frontend-desafio-casadeapostas
+cd frontend_casadeapostas
 
 # Instalar dependências
 npm install
