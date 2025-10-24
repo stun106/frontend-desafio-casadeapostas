@@ -153,7 +153,7 @@ Fluxo baseado em **JWT (JSON Web Token)**:
 
  **Resumo Final**  
  
-Este Frontend foi projetado para ser modular e escalável, permitindo futuras expansões — seja por meio da integração de novos módulos ou pela evolução visual.
+Este Frontend foi projetado para ser modular e escalável, permitindo futuras expansões seja por meio da integração de novos módulos ou pela evolução visual.
 Foram adotados princípios de responsabilidade única em cada camada, principalmente na UI, buscando manter a camada Page o mais clean possível e garantindo uma clara separação entre lógica e estrutura estática.
 
 Desenvolvido com por José Antônio B.S JR.
