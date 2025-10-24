@@ -17,7 +17,7 @@ O projeto **Frontend Casa de Apostas** é uma interface web desenvolvida em **Re
 
 ```bash
 # Clonar o repositório
-https://github.com/stun106/frontend-desafio-casadeapostas.git
+git clone https://github.com/stun106/frontend-desafio-casadeapostas.git
 
 # Acessar o diretório
 cd frontend_casadeapostas
