@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# Frontend — Desafio Técnico | Casa de Apostas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. Introdução
 
-Currently, two official plugins are available:
+**Propósito do Projeto:**  
+O projeto **Frontend Casa de Apostas** é uma interface web desenvolvida em **React + TypeScript + Vite**, responsável por gerenciar o fluxo de usuários, clientes e contatos de uma aplicação web. O sistema possibilita **cadastro, edição, listagem e exibição de clientes com seus respectivos contatos**, além da autenticação de usuários e comunicação direta com o backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 2. Inicio
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Pré-requisitos
 
-## Expanding the ESLint configuration
+- **Node.js**: v18+
+- **Gerenciador de pacotes:** npm
+### Instalação
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Clonar o repositório
+git clone https://github.com/seuusuario/frontend_casadeapostas.git
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Acessar o diretório
+cd frontend_casadeapostas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Instalar dependências
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Rodando a aplicação
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 3. Tecnologias
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+|Categoria|Ferramenta / Biblioteca|
+|---|---|
+|**Framework Principal**|React 19 + Vite 7|
+|**Linguagem**|TypeScript|
+|**Gerenciamento de Estado**|React Query (TanStack) + Context API|
+|**Roteamento**|React Router DOM 7|
+|**Estilização**|TailwindCSS + Material UI (MUI) + Emotion|
+|**Comunicação com API**|Axios|
+|**PDF & Relatórios**|jsPDF + jsPDF-Autotable|
+|**Feedbacks Visuais**|React Toastify|
+
+---
+
+## 4. Arquitetura e Estrutura de Pastas
+
+### Visão Geral da Arquitetura
+
+A aplicação segue uma **arquitetura modular**, dividindo responsabilidades por domínio (Cliente, Usuário, Login). Cada domínio contém seus próprios componentes, hooks e serviços de API.
+
+```mermaid
+graph TD
+A[Usuário] --> B[Componente React]
+B --> C[Hook Customizado]
+C --> D[Service Axios]
+D --> E[(API Backend)]
+E --> D
+D --> C
+C --> B
+B --> A
 ```
+
+### 📁 Estrutura de Pastas Simplificada
+
+```
+📦 src
+ ┣ 📂 assets            # Imagens e ícones
+ ┣ 📂 components        # Componentes reutilizáveis por domínio
+ ┣ 📂 data              # Contextos, hooks, providers e serviços de API
+ ┣ 📂 pages             # Páginas principais da aplicação
+ ┣ 📜 App.tsx           # Roteamento principal
+ ┣ 📜 main.tsx          # Ponto de entrada da aplicação
+ ┗ 📜 index.css         # Estilos globais
+```
+
+| Diretório           | Descrição                                                                |
+| ------------------- | ------------------------------------------------------------------------ |
+| **components/**     | Componentes funcionais agrupados por contexto (Cliente, Usuário, Login). |
+| **data/@types/**    | Tipagens e interfaces TypeScript compartilhadas.                         |
+| **data/providers/** | Configuração da API pública e privada (Axios).                           |
+| **data/service/**   | Serviços que consomem os endpoints do backend.                           |
+| **data/hook/**      | Hooks customizados para consumo de dados e manipulação de estado.        |
+| **pages/**          | Telas: cadastro, edição, exibição e login.                               |
+
+---
+
+## 5. Conceitos Centrais e Funcionalidades
+
+### Gerenciamento de Estado
+
+O estado global é controlado via **React Query**, otimizando chamadas à API e cache de dados.  
+Contexts são utilizados apenas para **autenticação** e **dados persistentes** (usuário logado, token, etc.).
+### Comunicação com API
+
+A comunicação é feita através do **Axios**, configurado no provider `ApiPublica` e `ApiPrivada`.  
+Cada serviço (ex: `ClienteService`, `UsuarioService`) define métodos CRUD que retornam Promises tipadas com `TypeScript`.
+
+**Padrão de tratamento:**
+
+- `loading`: controlado via React Query ou hooks locais.
+- `success`: feedback via Toastify.
+- `error`: exibição automática de mensagens via toast.
+    
+### Autenticação e Autorização
+
+Fluxo baseado em **JWT (JSON Web Token)**:
+
+- Login: `POST /auth` → retorna token JWT.
+- Token armazenado no `localStorage`.
+- Logout: remoção do token + redirecionamento para `/`.
+- Rotas protegidas: verificação condicional do token antes de renderizar páginas.
+
+---
+
+ **Resumo Final**  
+
+Esse Frontend foi projetado para ser **modular**, e **escalável**, possibilitando futuras expansões, seja na integração com novos módulos ou na evolução visual.
+
+Desenvolvido com por José Antônio B.S JR.
